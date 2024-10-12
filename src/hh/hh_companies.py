@@ -1,6 +1,6 @@
 from typing import Any
 
-from src.hh_api import HHApi
+from src.hh.hh_api import HHApi
 
 
 class HHCompanies(HHApi):
