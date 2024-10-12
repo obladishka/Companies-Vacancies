@@ -27,7 +27,7 @@ class HHApi:
             if self.response.status_code == 200:
                 return self.response.json()
 
-    def get_response(self, **kwargs) -> None | dict:
+    def _get_response(self, **kwargs) -> None | dict:
         """Публичный метод для подключения к API сайта hh.ru."""
         self.__params = dict(**kwargs)
         return self.__get_response(self.__params)
