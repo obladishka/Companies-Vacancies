@@ -50,7 +50,7 @@ class HHVacancies(HHApi):
 
             vacancy_dict = {
                 "id": vacancy.get("id"),
-                "company": vacancy.get("employer").get("name"),
+                "company_id": company_id,
                 "name": vacancy.get("name"),
                 "salary": raw_salary if currency == "RUR" else raw_salary * convert_to_ruble(exchange_rates, currency),
                 "url": vacancy.get("alternate_url"),
