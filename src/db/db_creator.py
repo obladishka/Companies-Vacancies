@@ -4,12 +4,12 @@ import psycopg2
 class DBCreator:
     """Класс для создания базы данных."""
 
-    def __init__(self, name: str, params: dict[str, str]):
+    def __init__(self, name: str, params: dict[str, str]) -> None:
         """Метод для инициализации объектов класса."""
         self.__name = name if name else "postgres"
         self.__params = params
 
-    def create_database(self):
+    def create_database(self) -> None:
         """Метод для создания базы данных."""
 
         conn = psycopg2.connect(dbname="postgres", **self.__params)
@@ -22,7 +22,7 @@ class DBCreator:
         cur.close()
         conn.close()
 
-    def create_table_companies(self):
+    def create_table_companies(self) -> None:
         """Метод для создания таблицы компаний."""
         conn = psycopg2.connect(dbname=self.__name, **self.__params)
 
@@ -42,7 +42,7 @@ class DBCreator:
         conn.commit()
         conn.close()
 
-    def create_table_vacancies(self):
+    def create_table_vacancies(self) -> None:
         """Метод для создания таблицы вакансий."""
         conn = psycopg2.connect(dbname=self.__name, **self.__params)
 
