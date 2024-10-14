@@ -1,0 +1,5 @@
+[postgresql]
+host=localhost # change if needed
+user=postgres # your user name, change if needed
+password= # your password
+port=5432 # change if needed
