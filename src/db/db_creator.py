@@ -6,25 +6,25 @@ class DBCreator:
 
     def __init__(self, name: str, params: dict[str, str]) -> None:
         """Метод для инициализации объектов класса."""
-        self.__name = name if name else "postgres"
-        self.__params = params
+        self._name = name if name else "postgres"
+        self._params = params
 
     def create_database(self) -> None:
         """Метод для создания базы данных."""
 
-        conn = psycopg2.connect(dbname="postgres", **self.__params)
+        conn = psycopg2.connect(dbname="postgres", **self._params)
         conn.autocommit = True
         cur = conn.cursor()
 
-        cur.execute(f"DROP DATABASE IF EXISTS {self.__name}")
-        cur.execute(f"CREATE DATABASE {self.__name}")
+        cur.execute(f"DROP DATABASE IF EXISTS {self._name}")
+        cur.execute(f"CREATE DATABASE {self._name}")
 
         cur.close()
         conn.close()
 
     def create_table_companies(self) -> None:
         """Метод для создания таблицы компаний."""
-        conn = psycopg2.connect(dbname=self.__name, **self.__params)
+        conn = psycopg2.connect(dbname=self._name, **self._params)
 
         with conn.cursor() as cur:
             cur.execute(
@@ -44,7 +44,7 @@ class DBCreator:
 
     def create_table_vacancies(self) -> None:
         """Метод для создания таблицы вакансий."""
-        conn = psycopg2.connect(dbname=self.__name, **self.__params)
+        conn = psycopg2.connect(dbname=self._name, **self._params)
 
         with conn.cursor() as cur:
             cur.execute(

@@ -14,7 +14,7 @@ class DBSaver(DBCreator):
 
     def save_data_to_companies(self, companies: list[dict[str, Any]]) -> None:
         """Метод для заполнения таблицы компаний."""
-        conn = psycopg2.connect(dbname=self.__name, **self.__params)
+        conn = psycopg2.connect(dbname=self._name, **self._params)
 
         with conn.cursor() as cur:
             for company in companies:
@@ -23,7 +23,7 @@ class DBSaver(DBCreator):
                     INSERT INTO companies (company_id, company_name, company_url)
                     VALUES (%s, %s, %s)
                     """,
-                    (company.get("id"), company.get("name"), company.get("url"))
+                    (company.get("id"), company.get("name"), company.get("url")),
                 )
 
         conn.commit()
@@ -31,7 +31,7 @@ class DBSaver(DBCreator):
 
     def save_data_to_vacancies(self, vacancies: list[dict[str, Any]]) -> None:
         """Метод для заполнения таблицы вакансий."""
-        conn = psycopg2.connect(dbname=self.__name, **self.__params)
+        conn = psycopg2.connect(dbname=self._name, **self._params)
 
         with conn.cursor() as cur:
             for vacancy in vacancies:
@@ -45,8 +45,9 @@ class DBSaver(DBCreator):
                         vacancy.get("company_id"),
                         vacancy.get("name"),
                         vacancy.get("salary"),
-                        vacancy.get("url"))
-                    )
+                        vacancy.get("url"),
+                    ),
+                )
 
         conn.commit()
         conn.close()
