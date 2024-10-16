@@ -14,15 +14,9 @@ class HHVacancies(HHApi):
     def __get_vacancies(self, company_id: str) -> list[dict[str, Any]]:
         """Приватный метод для получения вакансий определенной компании."""
         vacancies = []
-        page = 0
 
-        while page < 20:
-            response = super()._get_response(page=page, per_page=100, employer_id=company_id)
-            if not response:
-                break
-            if response:
-                vacancies.extend(response.get("items"))
-            page += 1
+        response = super()._get_response(per_page=100, employer_id=company_id)
+        vacancies.extend(response.get("items"))
 
         return vacancies
 
@@ -49,7 +43,6 @@ class HHVacancies(HHApi):
             )
 
             vacancy_dict = {
-                "id": vacancy.get("id"),
                 "company_id": company_id,
                 "name": vacancy.get("name"),
                 "salary": raw_salary if currency == "RUR" else raw_salary * convert_to_ruble(exchange_rates, currency),

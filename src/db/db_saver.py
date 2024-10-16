@@ -37,11 +37,10 @@ class DBSaver(DBCreator):
             for vacancy in vacancies:
                 cur.execute(
                     """
-                    INSERT INTO vacancies (vacancy_id, company_id, vacancy_name, salary, vacancy_url)
-                    VALUES (%s, %s, %s, %s, %s)
+                    INSERT INTO vacancies (company_id, vacancy_name, salary, vacancy_url)
+                    VALUES (%s, %s, %s, %s)
                     """,
                     (
-                        vacancy.get("id"),
                         vacancy.get("company_id"),
                         vacancy.get("name"),
                         vacancy.get("salary"),

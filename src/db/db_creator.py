@@ -12,15 +12,16 @@ class DBCreator:
     def create_database(self) -> None:
         """Метод для создания базы данных."""
 
-        conn = psycopg2.connect(dbname="postgres", **self._params)
-        conn.autocommit = True
-        cur = conn.cursor()
+        if self._name != "postgres":
+            conn = psycopg2.connect(dbname="postgres", **self._params)
+            conn.autocommit = True
+            cur = conn.cursor()
 
-        cur.execute(f"DROP DATABASE IF EXISTS {self._name}")
-        cur.execute(f"CREATE DATABASE {self._name}")
+            cur.execute(f"DROP DATABASE IF EXISTS {self._name}")
+            cur.execute(f"CREATE DATABASE {self._name}")
 
-        cur.close()
-        conn.close()
+            cur.close()
+            conn.close()
 
     def create_table_companies(self) -> None:
         """Метод для создания таблицы компаний."""
@@ -50,7 +51,7 @@ class DBCreator:
             cur.execute(
                 """
                 CREATE TABLE vacancies (
-                    vacancy_id VARCHAR,
+                    vacancy_id SERIAL,
                     company_id VARCHAR,
                     vacancy_name VARCHAR(255) NOT NULL,
                     salary INT NOT NULL,

@@ -69,12 +69,17 @@ class DBManager(DBCreator):
         conn.close()
         return round(result["avg"][0], 2)
 
-    def get_vacancies_with_higher_salary(self, avg_salary: float):
+    def get_vacancies_with_higher_salary(self, avg_salary: float, is_order: bool = False, is_descending: bool = False):
         """Метод для получения списка всех вакансий, у которых зарплата выше средней."""
+        basic_query = f"SELECT * FROM vacancies WHERE salary > {avg_salary}"
+        order_query = "" if not is_order else "\nORDER BY salary"
+        descending_query = "" if not is_descending else " DESC"
+        query = basic_query + order_query + descending_query
+
         conn = psycopg2.connect(dbname=self._name, **self._params)
 
         with conn.cursor() as cur:
-            cur.execute(f"SELECT * FROM vacancies WHERE salary > {avg_salary}")
+            cur.execute(query)
             names = [x[0] for x in cur.description]
             rows = cur.fetchall()
             result = pd.DataFrame(rows, columns=names)

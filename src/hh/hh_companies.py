@@ -18,9 +18,10 @@ class HHCompanies(HHApi):
         for company in companies:
             if len(company.get("name")) == len(company_name):
                 return company
-        return companies[0]
+        return companies[0] if companies else []
 
     def get_company(self, company_name: str) -> dict[str, str]:
         """Публичный метод для получения информации о компании по названию и ее форматированию."""
         company = self.__get_company(company_name)
-        return {"id": company.get("id"), "name": company.get("name"), "url": company.get("alternate_url")}
+        if company:
+            return {"id": company.get("id"), "name": company.get("name"), "url": company.get("alternate_url")}
